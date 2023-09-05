@@ -19,7 +19,7 @@ const Table = () => {
       phone: "31231231",
       email: "XXXXXXXXXXXXXXXXXX",
       status: "New",
-      action: {"Edit", 'delete'},
+      action: "edit",
     },
   ];
   return (
@@ -58,9 +58,10 @@ const Table = () => {
           </td>
           <td
             scope="row"
-            className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+            className="px-6 py-4 font-medium flex gap-3 text-gray-900 dark:text-white whitespace-nowrap"
           >
-            
+            <button>{item.action}</button>
+            <button> Delete</button>
           </td>
         </tr>
       ))}

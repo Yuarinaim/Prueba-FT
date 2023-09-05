@@ -3,11 +3,11 @@ import Table from "../components/Table";
 
 export default function ClientList() {
   return (
-    <div className="flex flex-col h-screen font-semibold items-center justify-center bg-slate-400 lg:text-lg">
+    <div className="flex flex-col gap-12 h-screen font-semibold items-center justify-center bg-slate-700 text-white lg:text-lg">
       CLIENTES
-      <div className="w-11/12 flex flex-col gap-3 bg-stone-500">
-        <div className="flex justify-between items-center p-2 text-sm font-semibold border-r-4 bg-white w-36">
-          + <button>Agregar Clientes</button>
+      <div className="w-11/12 flex flex-col gap-3">
+        <div className="flex justify-between items-center p-2 text-sm font-semibold border rounded-sm text-gray-900 bg-white w-36">
+          <span className="text-xl">+</span> <button>Agregar Clientes</button>
         </div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
