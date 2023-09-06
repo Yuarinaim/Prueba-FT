@@ -5,7 +5,7 @@ import "./index.css";
 import axios from "axios";
 
 const { LOCALHOST } = import.meta.env;
-axios.defaults.baseURL = LOCALHOST || "https://henry-pf-production-f816.up.railway.app";
+axios.defaults.baseURL = LOCALHOST || "http://prueba-ft-production.up.railway.app";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
