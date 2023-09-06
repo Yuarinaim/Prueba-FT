@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ClientList from "./Pages/ClientList";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
+import Home from "./Pages/Home";
 // import { useEffect } from "react";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       {/* className={`${pathname !== "/" && "Home"}`} */}
       <Router>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/:id" element={<ClientList />} />
