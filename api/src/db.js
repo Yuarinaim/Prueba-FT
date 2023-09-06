@@ -1,11 +1,49 @@
-const { Pool } = require("pg");
+const { Sequelize } = require("sequelize");
+const { config } = require("dotenv");
+const fs = require("fs");
+const path = require("path");
 
-const db = new Pool({
-  user: "postgres",
-  password: "EYKK9HP7YCc",
-  host: "localhost",
-  port: 5432,
-  database: "clientsdb",
+config();
+const { DB_USER, DB_PASSWORD, DB_DIALECT, DATABASE, DB_PORT, DB_HOST } = process.env;
+
+console.log("constrasenia", DB_PASSWORD);
+const sequelize = new Sequelize(DATABASE, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
+  port: DB_PORT,
+  dialect: DB_DIALECT,
+  logging: false,
 });
 
-module.exports = db;
+const basename = path.basename(__filename);
+const modelDefiners = [];
+
+// Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
+fs.readdirSync(path.join(__dirname, "/models"))
+  .filter((file) => file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js")
+  .forEach((file) => {
+    modelDefiners.push(require(path.join(__dirname, "/models", file)));
+  });
+
+// Injectamos la conexion (sequelize) a todos los modelos
+modelDefiners.forEach((model) => model(sequelize));
+// Capitalizamos los nombres de los modelos ie: product => Product
+let entries = Object.entries(sequelize.models);
+let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
+sequelize.models = Object.fromEntries(capsEntries);
+
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("Connection to PostgreSQL 2 has been established successfully.");
+    console.log("Models synchronized successfully.");
+  })
+  .catch((error) => {
+    console.error("Unable to connect to PostgreSQL database:", error);
+  });
+
+const { User, Client } = sequelize.models;
+
+User.hasMany(Client);
+Client.belongsTo(User);
+
+module.exports = { sequelize, ...sequelize.models };
