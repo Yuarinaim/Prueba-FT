@@ -10,8 +10,15 @@ const Table = ({ data, updateTableData }) => {
   };
 
   const handledDelete = async (id) => {
-    await axios.delete(`http://localhost:4000/${id}`);
-    updateTableData();
+    try {
+      const response = await axios.delete(`http://localhost:4000/${id}`);
+      if (response.status === 200) {
+        console.log("Cliente borrado correctamente");
+        updateTableData();
+      }
+    } catch (error) {
+      console.log("Hubo un error en el borrado del cliente");
+    }
   };
 
   return (
