@@ -1,15 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import FormPutClient from "../components/FormPutClient";
+import FormPutClient from "../components/FormPutClient";
 
 // eslint-disable-next-line react/prop-types
-const Table = ({ cerrarModal }) => {
-  const [data, setData] = useState(null); // Estado para almacenar los datos de la solicitud
-  const { id } = useParams(); // Obtenemos el parámetro 'id' de la URL usando useParams
+const Table = () => {
+  const [data, setData] = useState(null);
+  const { id } = useParams();
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+  const cerrarModal = () => {
+    setMostrarFormulario(!mostrarFormulario);
+  };
 
   useEffect(() => {
-    // Realiza la solicitud GET al endpoint usando Axios cuando el componente se monta
     axios
       .get(`http://localhost:4000/${id}`)
       .then((response) => {
@@ -74,11 +78,22 @@ const Table = ({ cerrarModal }) => {
               className="px-6 py-4 font-medium flex gap-3 text-gray-900 dark:text-white whitespace-nowrap"
             >
               <button onClick={cerrarModal}>Edit</button>
+              {mostrarFormulario && (
+                <>
+                  <div
+                    onClick={cerrarModal}
+                    className="fixed top-0 left-0 w-full h-full bg-black/20"
+                  ></div>
+                  {/* 
+                  Este put no anda correctamente
+                  */}
+                  <FormPutClient id={item.id} cerrarModal={cerrarModal} />
+                </>
+              )}
               <button onClick={() => handledDelete(item.id)}> Delete</button>
             </td>
           </tr>
         ))}
-      {/* <FormPutClient /> */}
     </>
   );
 };

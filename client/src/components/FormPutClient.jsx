@@ -16,14 +16,14 @@ export default function FormPutClient({ id, cerrarModal }) {
       });
       if (response.status === 200) cerrarModal();
     } catch (error) {
-      console.log(error.message);
+      cerrarModal();
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="fixed flex-col z-10 bg-gray-900 flex items-center justify-center"
+      className=" inset-0  bg-opacity-50 fixed flex-col z-10 bg-gray-900 flex items-center justify-center"
     >
       <div className="modal bg-white p-4 w-96 rounded-md shadow-md">
         <div className="relative z-0 w-full mb-6 group">

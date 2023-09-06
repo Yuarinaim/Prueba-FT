@@ -12,6 +12,7 @@ const getAllClients = async (req, res) => {
 
 const putClients = async (req, res) => {
   const { id, name, email, phone, status } = req.body;
+  // console.log("soy id putclient controller", id, name, email, phone, status);
   try {
     const client = await Client.findByPk(id);
     if (!client) {
