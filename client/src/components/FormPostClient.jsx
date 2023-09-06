@@ -2,9 +2,26 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-export default function FormPostClient({ cerrarModal }) {
+export default function FormPostClient({ cerrarModal, updateTableData }) {
   const { id } = useParams();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target);
+  //   const { name, email, phone, status } = Object.fromEntries(formData);
+  //   try {
+  //     const response = await axios.post("http://localhost:4000/", {
+  //       id: id,
+  //       name: name,
+  //       email: email,
+  //       phone: phone,
+  //       status: status,
+  //     });
+  //     if (response.status === 200) cerrarModal();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -17,7 +34,10 @@ export default function FormPostClient({ cerrarModal }) {
         phone: phone,
         status: status,
       });
-      if (response.status === 200) cerrarModal();
+      if (response.status === 200) {
+        cerrarModal();
+        updateTableData();
+      }
     } catch (error) {
       console.log(error.message);
     }

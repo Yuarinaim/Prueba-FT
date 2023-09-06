@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
-export default function FormPutClient({ id, cerrarModal }) {
+export default function FormPutClient({ id, cerrarModal, updateTableData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -14,7 +14,10 @@ export default function FormPutClient({ id, cerrarModal }) {
         phone: phone,
         status: status,
       });
-      if (response.status === 200) cerrarModal();
+      if (response.status === 200) {
+        cerrarModal();
+        updateTableData();
+      }
     } catch (error) {
       cerrarModal();
     }
@@ -23,7 +26,7 @@ export default function FormPutClient({ id, cerrarModal }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className=" inset-0  bg-opacity-50 fixed flex-col z-10 bg-gray-900 flex items-center justify-center"
+      className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]  bg-opacity-50 flex-col bg-gray-900 flex items-center justify-center"
     >
       <div className="modal bg-white p-4 w-96 rounded-md shadow-md">
         <div className="relative z-0 w-full mb-6 group">
@@ -85,7 +88,7 @@ export default function FormPutClient({ id, cerrarModal }) {
               <option className="text-gray-900" value="Off">
                 -----
               </option>
-              <option className="text-gray-900" value="New">
+              <option className="text-gray-900 " value="New">
                 New
               </option>
               <option className="text-gray-900" value="Cita">
