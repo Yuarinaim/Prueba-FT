@@ -19,9 +19,9 @@ function App() {
       {/* className={`${pathname !== "/" && "Home"}`} */}
       <Router>
         <Routes>
-          <Route path="/" element={<ClientList />} />
-          <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/:id" element={<ClientList />} />
         </Routes>
       </Router>
     </>
