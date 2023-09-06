@@ -1,12 +1,23 @@
 // import { Link } from "react-router-dom";
+import { useState } from "react";
 import Table from "../components/Table";
+import FormPostClient from "../components/FormPostClient";
 
 export default function ClientList() {
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+  const cerrarModal = () => {
+    setMostrarFormulario(!mostrarFormulario);
+  };
+
   return (
     <div className="flex flex-col gap-12 h-screen font-semibold items-center justify-center bg-slate-700 text-white lg:text-lg">
       CLIENTES
       <div className="w-11/12 flex flex-col gap-3">
-        <div className="flex justify-between items-center p-2 text-sm font-semibold border rounded-sm text-gray-900 bg-white w-36">
+        <div
+          onClick={/* abrirModal */ () => setMostrarFormulario(!mostrarFormulario)}
+          className="flex justify-between items-center p-2 text-sm font-semibold border rounded-sm text-gray-900 bg-white w-36"
+        >
           <span className="text-xl">+</span> <button>Agregar Clientes</button>
         </div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -34,11 +45,17 @@ export default function ClientList() {
               </tr>
             </thead>
             <tbody>
-              <Table />
+              <Table cerrarModal={cerrarModal} />
             </tbody>
           </table>
         </div>
       </div>
+      {mostrarFormulario && (
+        <>
+          <div onClick={cerrarModal} className="fixed top-0 left-0 w-full h-full bg-black/20"></div>
+          <FormPostClient cerrarModal={cerrarModal} />
+        </>
+      )}
     </div>
   );
 }
