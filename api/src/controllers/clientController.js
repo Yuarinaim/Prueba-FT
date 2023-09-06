@@ -6,7 +6,7 @@ const getAllClients = async (req, res) => {
     const client = await Client.findAll({ where: { isDeleted: false } });
     res.status(200).json({ client });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error);
   }
 };
 
@@ -16,13 +16,13 @@ const putClients = async (req, res) => {
   try {
     const client = await Client.findByPk(id);
     if (!client) {
-      return res.status(404).json({ error: "Client not found" });
+      throw new Error("Client not found");
     }
     await client.update({ name, email, phone, status });
     await client.save();
     return res.status(200).json({ client });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error);
   }
 };
 
@@ -31,15 +31,15 @@ const deleteClients = async (req, res) => {
   try {
     const client = await Client.findByPk(id);
     if (!client) {
-      res.status(404).json({ error: "Client not found" });
+      throw new Error("Client not found");
     }
-    // await client.destroy({ where: { id }} );
+    // await client.destroy({ where: { id }} ); esto esta mal
     // es mejor practica realizar un borrado logico
     await client.update({ isDeleted: true });
     await client.save();
     res.status(200).json({ client });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error);
   }
 };
 
@@ -49,7 +49,7 @@ const postClients = async (req, res) => {
     const user = await User.findOne({ where: { id } });
     const createClient = await Client.create({ name, email, phone, status });
     if (!user) {
-      return res.status(400).json({ error: "User not found" });
+      throw new Error("User not found");
     }
     createClient.setUser(id);
     res.status(200).json({
@@ -57,7 +57,7 @@ const postClients = async (req, res) => {
       data: createClient,
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error);
   }
 };
 

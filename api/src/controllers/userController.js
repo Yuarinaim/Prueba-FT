@@ -8,20 +8,20 @@ const getAllClientByUser = async (req, res) => {
   try {
     const user = await User.findByPk(id);
     if (!user) {
-      res.status(404).json({ error: "User not found" });
+      throw new Error("user not found");
     }
     const clients = await Client.findAll({
       where: { UserId: id, isDeleted: false },
     });
-    if (!clients.length) {
-      res.status(404).json({ error: "Clients not found" });
-    }
+    // if (!clients.length) {
+    //   throw new Error("Clients not found");
+    // }
     res.status(200).json({
       state: "Clientsfound",
       data: clients,
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error);
   }
 };
 
@@ -31,12 +31,12 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ where: { name: name } });
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      throw new Error("user not found");
     }
 
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      throw new Error("Invalid credentials");
     }
 
     const payload = {
@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
     // Envía la respuesta una vez, no después de cada condición.
     return res.status(200).json({ token, user });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json(error);
   }
 };
 
@@ -66,7 +66,7 @@ const postUser = async (req, res) => {
       data: createUser,
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error);
   }
 };
 
