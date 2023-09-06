@@ -1,45 +1,21 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import FormPutClient from "../components/FormPutClient";
 
-// eslint-disable-next-line react/prop-types
-const Table = () => {
-  const [data, setData] = useState(null);
-  const { id } = useParams();
+const Table = ({ data, updateTableData }) => {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   const cerrarModal = () => {
     setMostrarFormulario(!mostrarFormulario);
   };
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/${id}`)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener datos:", error);
-      });
-  }, [id]);
-
   const handledDelete = async (id) => {
     await axios.delete(`http://localhost:4000/${id}`);
+    updateTableData();
   };
-
-  // const handleEdit = async ({ id, name, email, phone, status }) => {
-  //   await axios.put(`http://localhost:4000/${id}`, {
-  //     name,
-  //     email,
-  //     phone,
-  //     status,
-  //   });
-  // };
 
   return (
     <>
-      {/* {console.log(data)} */}
       {data &&
         data.data.map((item) => (
           <tr key={item.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -77,20 +53,31 @@ const Table = () => {
               scope="row"
               className="px-6 py-4 font-medium flex gap-3 text-gray-900 dark:text-white whitespace-nowrap"
             >
-              <button onClick={cerrarModal}>Edit</button>
+              <button
+                className="transition duration-300 ease-in-out hover:text-blue-400"
+                onClick={cerrarModal}
+              >
+                Edit
+              </button>
               {mostrarFormulario && (
                 <>
                   <div
                     onClick={cerrarModal}
                     className="fixed top-0 left-0 w-full h-full bg-black/20"
                   ></div>
-                  {/* 
-                  Este put no anda correctamente
-                  */}
-                  <FormPutClient id={item.id} cerrarModal={cerrarModal} />
+                  <FormPutClient
+                    updateTableData={updateTableData}
+                    id={item.id}
+                    cerrarModal={cerrarModal}
+                  />
                 </>
               )}
-              <button onClick={() => handledDelete(item.id)}> Delete</button>
+              <button
+                className="transition duration-300 ease-in-out hover:text-red-400"
+                onClick={() => handledDelete(item.id)}
+              >
+                Delete
+              </button>
             </td>
           </tr>
         ))}
