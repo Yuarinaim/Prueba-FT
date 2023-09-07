@@ -27,7 +27,7 @@ export default function FormPostClient({ cerrarModal, updateTableData }) {
     const formData = new FormData(e.target);
     const { name, email, phone, status } = Object.fromEntries(formData);
     try {
-      const response = await axios.post("http://localhost:4000/", {
+      const response = await axios.post("/", {
         id: id,
         name: name,
         email: email,

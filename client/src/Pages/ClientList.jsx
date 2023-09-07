@@ -17,7 +17,7 @@ export default function ClientList() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/${id}`)
+      .get(`/${id}`)
       .then((response) => {
         setData(response.data);
       })
@@ -28,7 +28,7 @@ export default function ClientList() {
 
   const updateTableData = () => {
     axios
-      .get(`http://localhost:4000/${id}`)
+      .get(`/${id}`)
       .then((response) => {
         setData(response.data);
       })

@@ -7,7 +7,7 @@ export default function FormPutClient({ id, cerrarModal, updateTableData }) {
     const formData = new FormData(e.target);
     const { name, email, phone, status } = Object.fromEntries(formData);
     try {
-      const response = await axios.put(`http://localhost:4000/`, {
+      const response = await axios.put(`/`, {
         id: id,
         name: name,
         email: email,

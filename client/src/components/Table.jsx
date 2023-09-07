@@ -11,7 +11,7 @@ const Table = ({ data, updateTableData }) => {
 
   const handledDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/${id}`);
+      const response = await axios.delete(`/${id}`);
       if (response.status === 200) {
         console.log("Cliente borrado correctamente");
         updateTableData();

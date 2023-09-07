@@ -9,7 +9,7 @@ export default function LoginPage() {
     const formData = new FormData(e.target);
     const { username, password } = Object.fromEntries(formData);
     try {
-      const response = await axios.post("http://localhost:4000/login", {
+      const response = await axios.post("/login", {
         name: username,
         password: password,
       });

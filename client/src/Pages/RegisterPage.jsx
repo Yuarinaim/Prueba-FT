@@ -10,7 +10,7 @@ export default function RegisterPage() {
     const formData = new FormData(e.target);
     const { username, password, email } = Object.fromEntries(formData);
     try {
-      const response = await axios.post("http://localhost:4000/register", {
+      const response = await axios.post("/register", {
         name: username,
         password: password,
         email: email,
