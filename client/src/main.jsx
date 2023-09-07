@@ -4,7 +4,6 @@ import App from "./App.jsx";
 import "./index.css";
 import axios from "axios";
 
-const { LOCALHOST } = import.meta.env;
 axios.defaults.baseURL = "https://prueba-ft-production.up.railway.app";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
